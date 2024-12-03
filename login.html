@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login de Nutrición</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+    <div class="login-container">
+        <h2 class="fade-in">Bienvenido a VitalWave</h2>
+        <form id="login-form">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+    </div>
+    <footer class="footer"> <p>&copy; 2024 VitalWave. Todos los derechos reservados.</p>
+</div>
+
+
+    <script> document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+    
+        if (username === 'usuario' && password === 'contraseña') { 
+            setTimeout(function() { 
+                window.location.href = 'index.html';}, 1000);
+            
+        } else {
+            alert('Usuario o contraseña incorrectos');
+        }
+    });</script>
+</body>
+</html>

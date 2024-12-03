@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitalWave</title>
+</head>
+<link rel="stylesheet" href="Style-Recetas.css">
+
+<body>
+</head>
+<body>
+    <header>
+        
+        <a href="index.html" title="casa iconos">
+            <img src="Casitaa.png" height="50px" width="50px"> 
+        </a>
+    </header>
+    <div class="calculator">
+        <h1>Calculadora de Calorías</h1>
+        <form id="calorie-form"> <label for="gender">Género:</label>
+            <select id="gender" required>
+                <option value="male">Hombre</option>
+                <option value="female">Mujer</option>
+            </select>
+            <label for="weight">Peso (kg):</label>
+            <input type="number" id="weight" required>
+            <label for="height">Altura (cm):</label>
+            <input type="number" id="height" required>
+            <label for="age">Edad:</label> <input type="number" id="age" required>
+            <label for="activity">Nivel de actividad:</label> <select id="activity" required>
+                <option value="sedentary">Sedentario</option>
+                <option value="light">Ligero</option>
+                <option value="moderate">Moderado</option>
+                <option value="active">Activo</option>
+                <option value="very-active">Muy activo</option>
+            </select> <label for="goal">Objetivo:</label> <select id="goal" required>
+                <option value="lose">Perder peso</option>
+                <option value="maintain">Mantener peso</option>
+                <option value="gain">Ganar peso</option>
+            </select> <button type="submit">Calcular</button>
+        </form>
+        <div id="result"></div>
+        <div id="recipes"></div>
+    </div>
+
+    <script>
+       document.getElementById('calorie-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const gender = document.getElementById('gender').value;
+    const weight = document.getElementById('weight').value;
+    const height = document.getElementById('height').value;
+    const age = document.getElementById('age').value;
+    const activity = document.getElementById('activity').value;
+    const goal = document.getElementById('goal').value;
+
+    let bmr;
+    if (gender === 'male') {
+        bmr = 10 * weight + 6.25 * height - 5 * age + 5; 
+    } else {
+        bmr = 10 * weight + 6.25 * height - 5 * age - 161; 
+    }
+
+    let calories;
+    switch(activity) {
+        case 'sedentary':
+            calories = bmr * 1.2;
+            break;
+        case 'light':
+            calories = bmr * 1.375;
+            break;
+        case 'moderate':
+            calories = bmr * 1.55;
+            break;
+        case 'active':
+            calories = bmr * 1.725;
+            break;
+        case 'very-active':
+            calories = bmr * 1.9;
+            break;
+    }
+
+    switch(goal) {
+        case 'lose':
+            calories -= 500; 
+            break;
+        case 'gain':
+            calories += 500; 
+            break;
+    }
+
+    document.getElementById('result').innerHTML = `Calorías diarias necesarias: ${calories.toFixed(2)}`;
+
+    const recipes = getRecipes(calories);
+    document.getElementById('recipes').innerHTML = recipes;
+});
+
+function getRecipes(calories) {
+    let recipes;
+    if (calories < 2000) {
+        recipes = `
+            <h2>Recetas ligeras</h2>
+            <ul>
+                <li><strong>Ensalada de pollo:</strong> Pechuga de pollo a la parrilla, lechuga, tomate, pepino, y aderezo ligero.</li>
+                <li><strong>Batido de frutas:</strong> Plátano, fresas, yogur bajo en grasa, y un poco de miel.</li>
+                <li><strong>Verduras al vapor:</strong> Brócoli, zanahorias, y coliflor con un toque de aceite de oliva y sal.</li>
+            </ul>
+        `;
+    } else {
+        recipes = `
+            <h2>Recetas fuertes</h2>
+            <ul>
+                <li><strong>Pasta con salsa de carne:</strong> 
+                    <ul>
+                        <li>Ingredientes: 200g de pasta integral, 150g de carne molida magra, 1 taza de salsa de tomate casera, 1/4 taza de queso parmesano rallado.</li>
+                        <li>Instrucciones: Cocina la pasta según las instrucciones del paquete. En una sartén, cocina la carne molida hasta que esté dorada. Añade la salsa de tomate y cocina a fuego lento durante 10 minutos. Mezcla la pasta con la salsa y sirve con queso parmesano.</li>
+                    </ul>
+                </li>
+                <li><strong>Pollo al horno con patatas:</strong> 
+                    <ul>
+                        <li>Ingredientes: 2 muslos de pollo, 3 patatas medianas, 2 cucharadas de aceite de oliva, hierbas al gusto (romero, tomillo), sal y pimienta.</li>
+                        <li>Instrucciones: Precalienta el horno a 200°C. Coloca los muslos de pollo y las patatas cortadas en trozos en una bandeja para hornear. Rocía con aceite de oliva, añade las hierbas, sal y pimienta. Hornea durante 45 minutos o hasta que el pollo esté cocido y las patatas doradas.</li>
+                    </ul>
+                </li>
+                <li><strong>Arroz con frijoles y carne:</strong> 
+                    <ul>
+                        <li>Ingredientes: 1 taza de arroz integral, 1 taza de frijoles negros cocidos, 150g de carne de res magra, 1 cebolla picada, 1 pimiento rojo picado, especias al gusto (comino, pimentón), sal y pimienta.</li>
+                        <li>Instrucciones: Cocina el arroz según las instrucciones del paquete. En una sartén, cocina la carne de res hasta que esté dorada. Añade la cebolla y el pimiento y cocina hasta que estén tiernos. Añade los frijoles y las especias, y cocina a fuego lento durante 10 minutos. Mezcla con el arroz y sirve caliente.</li>
+                    </ul>
+                </li>
+            </ul>
+        `;
+    }
+
+    recipes += `<button onclick="resetForm()">Reiniciar</button>`;
+    return recipes;
+}
+
+function resetForm() {
+    document.getElementById('calorie-form').reset();
+    document.getElementById('result').innerHTML = '';
+    document.getElementById('recipes').innerHTML = '';
+}
+
+
+
+    </script>
+    <script>
+        const nav = document.querySelector("#nav");
+const abrir = document.querySelector("#abrir");
+const cerrar = document.querySelector("#cerrar");
+
+abrir.addEventListener("click", () => {
+    nav.classList.add("visible");
+})
+
+cerrar.addEventListener("click", () => {
+    nav.classList.remove("visible");
+})
+
+
+    </script>
+</body>
+
+</html>

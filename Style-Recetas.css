@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+   background-image:url(fondito.jpg);
+    margin: 0;
+    padding: 0;
+}
+
+.calculator {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow:1px 5px 10px;
+    width: 300px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#result, #recipes {
+    margin-top: 20px;
+}
+header{
+    background: linear-gradient(to right, #20d40f7c, #37df5b7c, #12da0b85);
+    align-items: center;
+    width: 100%;
+}
+
+
+
+
